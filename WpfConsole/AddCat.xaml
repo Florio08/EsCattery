@@ -1,0 +1,172 @@
+﻿<Window x:Class="WpfConsole.AddCat"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Aggiungi Gatto" Height="600" Width="1000" Background="#F4F6F8">
+    <DockPanel LastChildFill="True">
+
+        <!-- MENU SUPERIORE (coerente con Main) -->
+        <Menu DockPanel.Dock="Top" Background="#2C3E50" Foreground="White" FontSize="14" FontWeight="Bold">
+            <MenuItem Header="_Adozioni">
+                <MenuItem Header="Visualizza adozioni" Click="btn_ViewAdoptions"/>
+            </MenuItem>
+            <MenuItem Header="_Gatti">
+                <MenuItem Header="Aggiungi gatto" Click="btn_AddCat"/>
+                <MenuItem Header="Visualizza gatti" Click="btn_ViewCats"/>
+            </MenuItem>
+            <MenuItem Header="_Info">
+                <MenuItem Header="Info sul Programma"/>
+                <MenuItem Header="Info su me (Mario) (Sviluppatore)"/>
+            </MenuItem>
+        </Menu>
+
+        <!-- FOOTER -->
+        <StatusBar DockPanel.Dock="Bottom" Background="#2C3E50" Foreground="White">
+            <StatusBarItem Content="AddCat"/>
+            <Separator/>
+            <StatusBarItem>
+                <TextBlock>
+                    <Hyperlink NavigateUri="https://github.com/MarioLatifi"
+                               Foreground="LightBlue"
+                               RequestNavigate="Href_Click">
+                        Mario Latifi
+                    </Hyperlink>
+                </TextBlock>
+            </StatusBarItem>
+        </StatusBar>
+
+        <!-- CONTENUTO ORIZZONTALE -->
+        <Grid Margin="16">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="420"/>
+                <!-- Form -->
+                <ColumnDefinition Width="16"/>
+                <!-- Gutter -->
+                <ColumnDefinition Width="*"/>
+                <!-- Dropzone / Anteprima -->
+            </Grid.ColumnDefinitions>
+
+            <!-- ============ FORM SINISTRO ============ -->
+            <Border Grid.Column="0" Background="White" CornerRadius="12" Padding="18"
+                    BorderBrush="#E5E9F0" BorderThickness="1" Margin="0,-9,0,-9">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="335*"/>
+                        <ColumnDefinition Width="47*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="Nuovo Gatto" FontSize="20" FontWeight="Bold" Margin="0,0,0,12" Grid.ColumnSpan="2"/>
+
+                    <!-- Nome -->
+                    <StackPanel Grid.Row="1" Margin="0,6,0,6" Grid.ColumnSpan="2">
+                        <TextBlock Text="Nome" FontWeight="Bold"/>
+                        <TextBox x:Name="txtName" Height="30" />
+                    </StackPanel>
+
+                    <!-- Razza -->
+                    <StackPanel Grid.Row="2" Margin="0,6,0,6" Grid.ColumnSpan="2">
+                        <TextBlock Text="Razza" FontWeight="Bold"/>
+                        <TextBox x:Name="txtBreed" Height="30" />
+                    </StackPanel>
+
+                    <!-- Sesso (CheckBox come richiesto) -->
+                    <StackPanel Grid.Row="3" Margin="0,6,0,6" Grid.ColumnSpan="2">
+                        <TextBlock Text="Sesso" FontWeight="Bold"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                            <CheckBox x:Name="cbMale" Content="Maschio" Margin="0,0,16,0" Click="SexCheckBox_Click"/>
+                            <CheckBox x:Name="cbFemale" Content="Femmina" Click="SexCheckBox_Click"/>
+                        </StackPanel>
+                        <TextBlock Text="(Seleziona uno)" FontStyle="Italic" Opacity="0.6" FontSize="12"/>
+                    </StackPanel>
+
+                    <!-- Descrizione -->
+                    <StackPanel Grid.Row="4" Margin="0,6,0,6" Grid.ColumnSpan="2">
+                        <TextBlock Text="Descrizione" FontWeight="Bold"/>
+                        <TextBox x:Name="txtDescription" Height="90" AcceptsReturn="True" TextWrapping="Wrap" />
+                    </StackPanel>
+
+                    <!-- Date -->
+                    <StackPanel Grid.Row="5" Margin="0,6,0,6" Grid.ColumnSpan="2">
+                        <TextBlock Text="Data di nascita" FontWeight="Bold"/>
+                        <DatePicker x:Name="dpBirthDay" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="6" Margin="0,6,0,6" Grid.ColumnSpan="2">
+                        <TextBlock Text="Arrivo al gattile" FontWeight="Bold"/>
+                        <DatePicker x:Name="dpArrival" />
+                    </StackPanel>
+
+                    <!-- Nome file immagine -->
+                    <StackPanel Grid.Row="7" Margin="0,6,0,0" Grid.ColumnSpan="2">
+                        <TextBlock Text="Foto (nome file salvato)" FontWeight="Bold"/>
+                        <DockPanel LastChildFill="True">
+                            <Button Content="Seleziona immagine…" Width="150" Height="30" Margin="0,0,8,0"
+                                    Click="BtnSelectImage_Click"/>
+                            <TextBox x:Name="txtPhotoFileName" IsReadOnly="True" Height="30" />
+                        </DockPanel>
+                        <TextBlock Text="Suggerimento: trascina un'immagine nel riquadro a destra per caricarla."
+                                   Opacity="0.6" FontSize="12" Margin="0,4,0,0"/>
+                    </StackPanel>
+
+                    <!-- Azioni -->
+                    <StackPanel Grid.Row="8" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0" Grid.ColumnSpan="2">
+                        <Button Content="Annulla" Width="110" Height="30" Margin="0,0,8,0" Click="BtnCancel_Click"/>
+                        <Button Content="Salva" Width="140" Height="34" Background="#2ECC71" Foreground="White"
+                                Click="BtnSave_Click"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- ============ DROPZONE / PREVIEW DESTRA ============ -->
+            <Border Grid.Column="2" Background="White" CornerRadius="12" Padding="18"
+                    BorderBrush="#E5E9F0" BorderThickness="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="Foto del gatto" FontSize="20" FontWeight="Bold" Margin="0,0,0,12"/>
+
+                    <!-- Drop area -->
+                    <Border Grid.Row="1" x:Name="DropArea" AllowDrop="True" CornerRadius="10"
+                            BorderBrush="#C9D6E2" BorderThickness="2" 
+                            Background="#FAFCFF" Padding="16"
+                            DragOver="DropArea_DragOver" Drop="DropArea_Drop">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <ScrollViewer Grid.Row="0" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                                <Image x:Name="imgPreview" Stretch="Uniform" MaxHeight="360"/>
+                            </ScrollViewer>
+
+                            <StackPanel Grid.Row="1" Margin="0,12,0,0" HorizontalAlignment="Center">
+                                <TextBlock Text="Trascina qui un'immagine (JPG, PNG, GIF, BMP, WEBP)"
+                                           Opacity="0.7" TextAlignment="Center"/>
+                                <TextBlock Text="oppure usa 'Seleziona immagine…' a sinistra"
+                                           Opacity="0.5" FontSize="12" TextAlignment="Center"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+
+                    <TextBlock Grid.Row="2" Text="Il file verrà copiato in Resources/CatImages e verrà salvato solo il nome del file."
+                               Opacity="0.6" FontSize="12" Margin="0,10,0,0"/>
+                </Grid>
+            </Border>
+        </Grid>
+    </DockPanel>
+</Window>

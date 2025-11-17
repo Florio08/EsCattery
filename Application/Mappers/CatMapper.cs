@@ -12,12 +12,12 @@ namespace Application.Mappers
     {
         public static Cat ToEntity (this CatDto dto)
         {
-            return new Cat(dto.Name,dto.Race,dto.sex.ToEntity(),dto.Description,dto.Birth,dto.ArrivedToCattery,dto.LeftCattery,dto.CatImage);
+            return new Cat(dto.Name,dto.Race,dto.Sex.ToEntity(),dto.Description,dto.Birth,dto.ArrivedToCattery,dto.LeftCattery,dto.CatImage,dto.Cui);
         }
         public static CatDto ToDto(this Cat obj)
         {
             return new CatDto(obj.Name, obj.Race,obj.CatSex.ToDto(),obj.Description,obj.Birth,obj.ArrivedToCattery,obj.LeftCattery,obj.CatImage,obj.Cui);
         }
-
+                
     }
 }

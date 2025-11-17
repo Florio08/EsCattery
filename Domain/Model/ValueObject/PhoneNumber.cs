@@ -10,9 +10,9 @@ namespace Domain.Model.ValueObject
 {
     public record PhoneNumber
     {
-        public PhoneNumber(string number)
+        public PhoneNumber(string number) 
         {
-            // Definisci una regex che verifica un prefisso internazionale (+39, +69, etc.)
+            // Definisci una regex che verifica un prefisso internazionale (+39, +69, etc.) 
             // e un numero di telefono che può variare in lunghezza (ad esempio 9 cifre)
             string pattern = @"^\+(\d{2,3})\s?\d{6,12}$";
 
@@ -25,7 +25,7 @@ namespace Domain.Model.ValueObject
             {
                 throw new ArgumentException("Invalid phone number format", nameof(number));
             }
-
+            
         }
         public string Number { get; private set; }
         public override string ToString()

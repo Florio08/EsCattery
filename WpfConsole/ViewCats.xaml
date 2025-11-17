@@ -1,0 +1,103 @@
+﻿<Window x:Class="WpfConsole.ViewCats"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:dto="clr-namespace:Application.Dto;assembly=Application"  
+        Title="Visualizza Gatti" Height="600" Width="1000" Background="#F4F6F8">
+
+    <DockPanel LastChildFill="True">
+
+        <!-- MENU SUPERIORE -->
+        <Menu DockPanel.Dock="Top" Background="#2C3E50" Foreground="White" FontSize="14" FontWeight="Bold">
+            <MenuItem Header="_Adozioni">
+                <MenuItem Header="Visualizza adozioni" Click="btn_ViewAdoptions"/>
+            </MenuItem>
+            <MenuItem Header="_Gatti">
+                <MenuItem Header="Aggiungi gatto" Click="btn_AddCat"/>
+            </MenuItem>
+            <MenuItem Header="_Info">
+                <MenuItem Header="Info sul Programma"/>
+                <MenuItem Header="Info su me (Mario) (Sviluppatore)"/>
+            </MenuItem>
+            <MenuItem Header="_Torna indietro" Click="btn_back"/>
+        </Menu>
+
+        <!-- FOOTER -->
+        <StatusBar DockPanel.Dock="Bottom" Background="#2C3E50" Foreground="White">
+            <StatusBarItem Content="ViewCats"/>
+            <Separator/>
+            <StatusBarItem>
+                <TextBlock>
+                    <Hyperlink NavigateUri="https://github.com/MarioLatifi"
+                               Foreground="LightBlue"
+                               RequestNavigate="Href_Click">
+                        Mario Latifi
+                    </Hyperlink>
+                </TextBlock>
+            </StatusBarItem>
+        </StatusBar>
+
+        <!-- CONTENUTO -->
+        <Grid Margin="16">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="Gatti presenti" FontSize="22" FontWeight="Bold" Margin="0,0,0,12"/>
+
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                <ItemsControl x:Name="icCats">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel IsItemsHost="True"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+                    <ItemsControl.ItemContainerStyle>
+                        <Style TargetType="ContentPresenter">
+                            <Setter Property="Margin" Value="8"/>
+                        </Style>
+                    </ItemsControl.ItemContainerStyle>
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="{x:Type dto:CatDto}">
+                            <Border Background="White" CornerRadius="12" Padding="10"
+                                    BorderBrush="#E5E9F0" BorderThickness="1">
+                                <Grid Width="220">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="160"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <!-- Immagine -->
+                                    <Border Grid.Row="0" CornerRadius="8" ClipToBounds="True" Background="#FAFCFF">
+                                        <Image x:Name="imgCatPhoto" Stretch="UniformToFill" Loaded="Image_Loaded"/>
+                                    </Border>
+
+                                    <!-- Nome -->
+                                    <TextBlock Grid.Row="1" Text="{Binding Name}" 
+                                               FontWeight="Bold" FontSize="16" Margin="0,8,0,0"/>
+
+                                    <!-- Descrizione -->
+                                    <TextBlock Grid.Row="2" Text="{Binding Description}" 
+                                               TextWrapping="Wrap" Opacity="0.85" MaxHeight="48"/>
+
+                                    <!-- Data di nascita -->
+                                    <TextBlock Grid.Row="3" Margin="0,4,0,0"
+                                               Text="{Binding BirthDay, StringFormat='Nato il: {0:dd/MM/yyyy}'}"
+                                               Opacity="0.7"/>
+
+                                    <!-- Clic sulla card -->
+                                    <Button Grid.RowSpan="4" Background="Transparent" BorderThickness="0"
+                                            Click="OpenCatDetails_Click"/>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Grid>
+    </DockPanel>
+</Window>

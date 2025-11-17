@@ -8,7 +8,7 @@ using Domain.Model.Entities;
 using Domain.Model.ValueObject;
 namespace Application.Mappers
 {
-    public static class AddressMapper
+    public static class AddressPercistenceMapper
     {
         //in realtá a quanto pare dovrei rifare i controlli ma onesto stanno giá di sotto, al massimo se proprio vogliamo faccio un try-catch
         public static Address ToEntity(this AddressDto dto)//metodo di estensione di AddressDto

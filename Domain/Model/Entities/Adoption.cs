@@ -9,8 +9,8 @@ namespace Domain.Model.Entities
 {
     public class Adoption
     {
-
-        public Adoption(Cat cat, Adopter adopter,DateOnly date)
+        
+        public Adoption(Cat cat, Adopter adopter,DateOnly date) 
         {
             AdoptionCat = cat;
             AdoptionAdopter = adopter;

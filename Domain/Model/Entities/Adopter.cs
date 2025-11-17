@@ -10,7 +10,7 @@ namespace Domain.Model.Entities
 {
     public class Adopter
     {
-        public Adopter(string name, string surname, Address homeAddress, PhoneNumber celNumber,FiscalCode fiscalCode, Email email)
+        public Adopter(string name, string surname, Address homeAddress, PhoneNumber celNumber,FiscalCode fiscalCode, Email email) 
         {
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -20,7 +20,7 @@ namespace Domain.Model.Entities
             {
                 throw new ArgumentException("surname cannot be null or empty", nameof(surname));
             }
-
+            
             Name = name;
             Surname = surname;
             HomeAddress = homeAddress;

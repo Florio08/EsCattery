@@ -6,13 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Dto
+namespace  Infrastructure.Persistence.Dto
 {
-    public record CatDto(
+    public record CatPercistenceDto(
 
         string? Name,
         string? Race,
-        SexDto? Sex,
+        Sex? sex,
         string? Description,
         DateOnly? Birth,
         DateOnly ArrivedToCattery,

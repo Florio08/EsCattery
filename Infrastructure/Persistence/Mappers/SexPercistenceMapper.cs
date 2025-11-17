@@ -5,25 +5,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-namespace Application.Mappers
+using Infrastructure.Persistence.Dto;
+namespace Infrastructure.Persistence.Mappers
 {
     public static class SexMapper
     {
-        public static Sex ToEntity(this SexDto dto )
+        public static Sex ToEntity(this SexPercistenceDto dto)
         {
-            if (dto.Sex==0)
+            if (dto.Sex == 0)
             {
                 return Sex.Male;
             }
             return Sex.Female;
         }
-        public static SexDto ToDto(this Sex value){
+        public static SexPercistenceDto ToDto(this Sex value)
+        {
             if (value == Sex.Male)
             {
-                return new SexDto(0);
+                return new SexPercistenceDto(0);
             }
-            return new SexDto(1);
+            return new SexPercistenceDto(1);
         }
     }
 }

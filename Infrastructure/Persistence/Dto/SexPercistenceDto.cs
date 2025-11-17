@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Dto
+namespace Infrastructure.Persistence.Dto
 {
-    public record SexDto(int Sex);
+    public record SexPercistenceDto(int Sex);
 }

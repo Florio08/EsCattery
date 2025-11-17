@@ -12,20 +12,21 @@ namespace Application.UseCases
 {
     public class AdoptionService
     {
-        IModelRepository<Cat> _catRepo;
-        IModelRepository<Adoption> _adoptionRepo;
+        ICatRepo _catRepo;
+        IAdoptionRepo _adoptionRepo;
+        IModelRepository<Adopter> _adopterRepo;
         /// <summary>
-        ///
+        /// 
         /// </summary>
         /// <param name="catRepo"></param>
         /// <param name="adoptionRepo"></param>
-        public AdoptionService(IModelRepository<Cat> catRepo, IModelRepository<Adoption> adoptionRepo)
+        public AdoptionService(ICatRepo catRepo, IAdoptionRepo adoptionRepo,IModelRepository<Adopter> adopterRepo )
         {
             _catRepo = catRepo;
             _adoptionRepo = adoptionRepo;
         }
         /// <summary>
-        ///
+        /// 
         /// </summary>
         /// <param name="cat"></param>
         /// <param name="adopter"></param>
@@ -39,7 +40,7 @@ namespace Application.UseCases
             RemoveCat(cat.ToEntity());
         }
         /// <summary>
-        ///
+        /// 
         /// </summary>
         /// <param name="cat"></param>
         private void RemoveCat(Cat cat)
@@ -47,7 +48,7 @@ namespace Application.UseCases
             _catRepo.RemoveFromRepo(cat);//da configurare sul repository in infrastructure
         }
         /// <summary>
-        ///
+        /// 
         /// </summary>
         /// <param name="cat"></param>
         /// <param name="refundDate"></param>
@@ -60,9 +61,10 @@ namespace Application.UseCases
             adoption.AdoptionCat.LeftCattery = null;
             _adoptionRepo.RemoveFromRepo(adoption);
             _catRepo.AddToRepo(obj);
+            _catRepo.Update(obj);
         }
         /// <summary>
-        ///
+        /// 
         /// </summary>
         /// <param name="cat"></param>
         /// <returns></returns>
@@ -73,12 +75,22 @@ namespace Application.UseCases
             List<Adoption> AllAdoptions = new List<Adoption>(_adoptionRepo.GetAll());
             for (int catPos = 0; catPos < AllAdoptions.Count(); catPos++)
             {
-                if (obj == AllAdoptions[catPos].AdoptionCat)
+                if (obj.Equals(AllAdoptions[catPos].AdoptionCat))
                 {
                     return AllAdoptions[catPos];
                 }
             }
             throw new ArgumentException("Cat not found on the cattery list");
+        }
+        public List<AdoptionDto> GetAllAdoptions()
+        {
+            List<AdoptionDto> adoptions = new List<AdoptionDto>();
+            List<Adoption> allAdoptions = new List<Adoption>(_adoptionRepo.GetAll());
+            for (int i = 0; i < allAdoptions.Count(); i++)
+            {
+                adoptions.Add(allAdoptions[i].ToDto());
+            }
+            return adoptions;
         }
     }
 }

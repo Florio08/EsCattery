@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Domain.Model.ValueObject;
 using Domain.Model.Entities;
@@ -49,7 +49,7 @@ namespace TestDomain
         public void metodo_CatValido_NomeAssegnato()
         {
             var arrived = DateOnly.FromDateTime(DateTime.Today);
-            var cat = new Cat("Micio", "Europeo", Sex.Male, "Gatto allegro", null, arrived, null, null);
+            var cat = new Cat("Micio", "Europeo", Sex.Male, "Gatto allegro", null, arrived, null, null,null);
 
             Assert.AreEqual("Micio", cat.Name);
         }
@@ -72,7 +72,7 @@ namespace TestDomain
         public void metodo_AdoptionDataImpostata_DataCorretta()
         {
             var arrived = DateOnly.FromDateTime(DateTime.Today);
-            var cat = new Cat("Pulce", "Siamese", Sex.Male, "Descrizione", null, arrived, null, null);
+            var cat = new Cat("Pulce", "Siamese", Sex.Male, "Descrizione", null, arrived, null, null, null);
 
             var address = new Address("via Verdi 3", "Torino", "10100", "Italia");
             var phone = new PhoneNumber("+39 987654321");

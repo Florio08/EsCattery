@@ -97,11 +97,11 @@ namespace Application.Tests
     }
 
     // AdoptionDto_Tests
-
+   
     [TestClass]
     public class AdoptionDto_Tests
     {
-        private readonly CatDto _cat = new("Micio", "Europeo", new SexDto("male"), "Dolce",
+        private readonly CatDto _cat = new("Micio", "Europeo", new SexDto(0), "Dolce",
             new DateOnly(2020, 1, 1), new DateOnly(2021, 1, 1), null, null, null);
         private readonly AdopterDto _adopter = new("Mario", "Rossi",
             new AddressDto("Via Roma", "Milano", "20100", "Italia"),
@@ -136,7 +136,7 @@ namespace Application.Tests
     [TestClass]
     public class CatDto_Tests
     {
-        private readonly SexDto _sex = new("female");
+        private readonly SexDto _sex = new(1);
 
         [TestMethod]
         public void CatDto_Ctor_ConValoriValidi_ImpostaNome()
@@ -159,7 +159,7 @@ namespace Application.Tests
         {
             var dto = new CatDto("Micia", "Persiano", _sex, "Tranquilla",
                 new DateOnly(2019, 5, 10), new DateOnly(2020, 6, 1), null, "img.jpg", "CUI123");
-            Assert.AreEqual(_sex, dto.sex);
+            Assert.AreEqual(_sex, dto.Sex);
         }
 
         [TestMethod]
@@ -234,15 +234,15 @@ namespace Application.Tests
         [TestMethod]
         public void SexDto_Ctor_ConValoreMaschile_ImpostaMale()
         {
-            var dto = new SexDto("male");
-            Assert.AreEqual("male", dto.Sex);
+            var dto = new SexDto(0);
+            Assert.AreEqual(0, dto.Sex);
         }
 
         [TestMethod]
         public void SexDto_Ctor_ConValoreFemminile_ImpostaFemale()
         {
-            var dto = new SexDto("female");
-            Assert.AreEqual("female", dto.Sex);
+            var dto = new SexDto(1);
+            Assert.AreEqual(1, dto.Sex);
         }
     }
 
@@ -321,7 +321,7 @@ namespace Application.Tests
         [TestMethod]
         public void CatMapper_ToEntity_ConDtoValido_CreaEntityConNome()
         {
-            var dto = new CatDto("Micio", "Europeo", new SexDto("male"), "Dolce",
+            var dto = new CatDto("Micio", "Europeo", new SexDto(0), "Dolce",
                 new DateOnly(2020, 1, 1), new DateOnly(2021, 1, 1), null, "img.jpg", "CUI123");
             var entity = dto.ToEntity();
             Assert.AreEqual("Micio", entity.Name);

@@ -1,0 +1,25 @@
+﻿<Window x:Class="WpfConsole.ViewAdoptions"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Adozioni" Height="500" Width="800">
+    <Grid>
+        <ListView Name="lvAdoptions" Margin="10" SelectionMode="Single">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Gatto" DisplayMemberBinding="{Binding Cat.Name}" Width="120"/>
+                    <GridViewColumn Header="Adottante" DisplayMemberBinding="{Binding Adopter.Name}" Width="120"/>
+                    <GridViewColumn Header="Cognome" DisplayMemberBinding="{Binding Adopter.Surname}" Width="120"/>
+                    <GridViewColumn Header="Data Adozione" DisplayMemberBinding="{Binding Date}" Width="120"/>
+                    <GridViewColumn Header="Data Uscita" DisplayMemberBinding="{Binding Cat.LeftCattery}" Width="120"/>
+                    <GridViewColumn Header="Azioni" Width="120">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Revoca" Click="Refund_Click"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</Window>

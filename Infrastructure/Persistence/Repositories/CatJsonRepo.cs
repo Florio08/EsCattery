@@ -1,86 +1,93 @@
-﻿using Application.Dto;
-using Application.Interfaces;
-using Application.Mappers;
+﻿using Application.Interfaces;
 using Domain.Model.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using Infrastructure.Persistence.Dto;
 using System.Text.Json;
-using System.Threading.Tasks;
+using Infrastructure.Persistence.Mappers;
 
 namespace Infrastructure.Persistence.Repositories
 {
     public class CatJsonRepo : ICatRepo
     {
-        private List<Cat> _cache;
+        private List<Cat> _cache = new List<Cat>();
         private string _filePath = "cats.json";
+        public CatJsonRepo()
+        {
+            EnsureLoaded();
+        }
         private void EnsureLoaded()
         {
             if (_cache.Count > 0) return;
+
             if (!File.Exists(_filePath))
             {
-                _cache = new List<Cat>();
+                // file mancante -> cache vuota (già inizializzata)
                 return;
             }
-            List<CatDto> dtoList = new List<CatDto>();
-            dtoList = JsonSerializer.Deserialize<List<CatDto>>(File.ReadAllText(_filePath));
+
+            var json = File.ReadAllText(_filePath);
+            var dtoList = JsonSerializer.Deserialize<List<CatPercistenceDto>>(json) ?? new List<CatPercistenceDto>();
+
             for (int i = 0; i < dtoList.Count; i++)
             {
                 _cache.Add(dtoList[i].ToEntity());
             }
         }
 
-        public Cat? GetByCui(string CUI)
+        public Cat GetByCui(string CUI)
         {
             EnsureLoaded();
-            for(int i = 0; i < _cache.Count; i++)
-            {
-                if (_cache[i].Cui == CUI) return _cache[i];
-            }
-            return null;
+            var cat = _cache.FirstOrDefault(c => c.Cui == CUI);
+            if (cat == null) throw new KeyNotFoundException($"Cat with CUI '{CUI}' not found.");
+            return cat;
         }
+
         public IEnumerable<Cat> GetAll()
         {
             EnsureLoaded();
             return _cache;
         }
+
         public void RemoveFromRepo(Cat itemToRemove)
         {
             EnsureLoaded();
             _cache.Remove(itemToRemove);
-            List<CatDto> _dtovalues = new List<CatDto>();
-            for (int i = 0; i < _cache.Count; i++)//trafrormo la lista di domain in lista di dto e la serializzo
+
+            var dtoValues = new List<CatPercistenceDto>();
+            for (int i = 0; i < _cache.Count; i++)
             {
-                _dtovalues.Add(_cache[i].ToDto());
+                dtoValues.Add(_cache[i].ToDto());
             }
-            string jsonString = JsonSerializer.Serialize(_dtovalues);
+
+            var jsonString = JsonSerializer.Serialize(dtoValues);
             File.WriteAllText(_filePath, jsonString);
         }
+
         public void AddToRepo(Cat itemToAdd)
         {
             EnsureLoaded();
             _cache.Add(itemToAdd);
-            List<CatDto> _dtovalues = new List<CatDto>();
+
+            var dtoValues = new List<CatPercistenceDto>();
             for (int i = 0; i < _cache.Count; i++)
             {
-                _dtovalues.Add(_cache[i].ToDto());
+                dtoValues.Add(_cache[i].ToDto());
             }
-            string jsonString = JsonSerializer.Serialize(_dtovalues);
-            File.WriteAllText(_filePath, jsonString);
+
+            var jsonString = JsonSerializer.Serialize(dtoValues);
+            File.WriteAllText(_filePath,jsonString);
         }
+
         public void Update(Cat itemToUpdate)
         {
             EnsureLoaded();
-            for(int i = 0; i < _cache.Count; i++)
+            for (int i = 0; i < _cache.Count; i++)
             {
-                if(_cache[i].Equals(itemToUpdate))
+                if (_cache[i].Equals(itemToUpdate))
                 {
                     _cache[i] = itemToUpdate;
                     break;
                 }
             }
-
         }
     }
 }

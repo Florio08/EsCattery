@@ -14,7 +14,7 @@ namespace Domain.Model.Entities
     }
     public class Cat
     {
-        public Cat(string name,string race,Sex sex,string description, DateOnly? birth,DateOnly arrived,DateOnly? left,string? catImage)
+        public Cat(string name,string race,Sex sex,string description, DateOnly? birth,DateOnly arrived,DateOnly? left,string? catImage,string? cui)
         {
             if(string.IsNullOrWhiteSpace(name))
             {
@@ -38,7 +38,14 @@ namespace Domain.Model.Entities
             LeftCattery = left;
             CatImage = catImage;
             //genero un numero casuale di 5 cifre
-            Generate();
+            if (!string.IsNullOrWhiteSpace(cui))
+            {
+                Cui = cui;
+            }
+            else
+            {
+                Generate();
+            }
         }
         public void Generate()
         {

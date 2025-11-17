@@ -1,0 +1,10 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Infrastructure.Persistence.Dto
+{
+    public record AdoptionPercistenceDto(CatPercistenceDto Cat, AdopterPercistenceDto Adopter, DateOnly Date);
+}
